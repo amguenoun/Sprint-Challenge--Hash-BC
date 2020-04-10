@@ -8,10 +8,34 @@ from hashtables import (HashTable,
 
 def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
+    answer = None
+    duplicates = None
 
-    """
-    YOUR CODE HERE
-    """
+    for i in range(len(weights)):
+        prev = hash_table_retrieve(ht, weights[i])
+        if prev is not None and weights[i] * 2 == limit:
+            duplicates = (i, hash_table_retrieve(ht, weights[i]))
+            return duplicates
+        hash_table_insert(ht, weights[i], i)
+
+    for i in range(length):
+        first = weights[i]
+        if hash_table_retrieve(ht, limit - first):
+            second = limit - first
+            if hash_table_retrieve(ht, first) > hash_table_retrieve(ht, second):
+                answer = (hash_table_retrieve(ht, first),
+                          hash_table_retrieve(ht, second))
+            elif first == second:
+                holder = hash_table_retrieve(ht, first)
+                hash_table_remove(ht, first)
+                answer = (holder, hash_table_retrieve(ht, second))
+            else:
+                answer = (hash_table_retrieve(ht, second),
+                          hash_table_retrieve(ht, first))
+
+    if answer:
+        print("ANSWER: ", answer)
+        return answer
 
     return None
 
