@@ -34,7 +34,6 @@ def get_indices_of_item_weights(weights, length, limit):
                           hash_table_retrieve(ht, first))
 
     if answer:
-        print("ANSWER: ", answer)
         return answer
 
     return None
